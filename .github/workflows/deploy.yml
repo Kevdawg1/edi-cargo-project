@@ -65,6 +65,6 @@ jobs:
       - name: Deploy to Azure Container Apps
         run: |
           az containerapp update \
-            --name ${{ secrets.CONTAINER_APP_NAME }} \
-            --resource-group ${{ secrets.RESOURCE_GROUP }} \
+            --name ${{ secrets.AZURE_CONTAINER_APP_NAME }} \
+            --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
             --image ${{ secrets.ACR_NAME }}.azurecr.io/edi-cargo-backend:latest
