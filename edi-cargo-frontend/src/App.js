@@ -15,7 +15,6 @@ export default function EDICargoGenerator() {
   const [cargoItems, setCargoItems] = useState([defaultCargoItem()]);
   const [ediOutput, setEdiOutput] = useState('');
   const [ediInput, setEdiInput] = useState('');
-  const [parsedItems, setParsedItems] = useState([]);
 
   const handleItemChange = (index, field, value) => {
     const updated = [...cargoItems];
