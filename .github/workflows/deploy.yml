@@ -24,10 +24,10 @@ jobs:
           npm install
           npm run build
 
-          - name: Azure Login (using service principal)
-          uses: azure/login@v1
-          with:
-            creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Azure Login (using service principal)
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
   
       - name: Upload to Azure Blob Storage (authenticated)
         run: |
