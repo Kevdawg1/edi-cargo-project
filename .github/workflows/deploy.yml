@@ -65,10 +65,6 @@ jobs:
       - name: Deploy to Azure Container Apps
         run: |
           az containerapp update \
-            --name ${{ secrets.AZURE_CONTAINERAPPS_NAME }} \
-            --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
-            --image ${{ secrets.ACR_LOGIN_SERVER }}/fastapi-backend:latest \
-            --environment ${{ secrets.AZURE_CONTAINERAPPS_ENV }} \
-            --registry-server ${{ secrets.ACR_LOGIN_SERVER }} \
-            --registry-username ${{ secrets.ACR_USERNAME }} \
-            --registry-password ${{ secrets.ACR_PASSWORD }}
+            --name ${{ secrets.CONTAINER_APP_NAME }} \
+            --resource-group ${{ secrets.RESOURCE_GROUP }} \
+            --image ${{ secrets.ACR_NAME }}.azurecr.io/edi-cargo-backend:latest
