@@ -31,7 +31,7 @@ jobs:
               --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
               --auth-mode key \
               --destination \$web \
-              --source frontend/build \
+              --source edi-cargo-frontend/build \
               --overwrite
 
 
