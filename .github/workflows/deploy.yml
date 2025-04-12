@@ -7,28 +7,33 @@ on:
 
 jobs:
   build-frontend:
-    name: Deploy React Frontend
+    name: Build and Deploy React App to Azure Blob Storage
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
+
       - name: Install and Build
         run: |
-          cd edi-cargo-frontend
+          cd frontend
           npm install
           npm run build
-      - name: Deploy to Azure Static Web Apps
-        uses: Azure/static-web-apps-deploy@v1
+
+      - name: Upload to Azure Blob Storage
+        uses: azure/CLI@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEBAPP_TOKEN }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: "upload"
-          app_location: "frontend"
-          output_location: "frontend/build"
+          azcliversion: 2.53.0
+          inlineScript: |
+            az storage blob upload-batch \
+              --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
+              --auth-mode key \
+              --destination \$web \
+              --source frontend/build \
+              --overwrite
+
 
   deploy-backend:
     name: Build and Deploy FastAPI Docker to ACA

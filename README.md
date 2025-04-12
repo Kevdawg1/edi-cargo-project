@@ -27,7 +27,8 @@
 <br />
 <div align="center">
   <a href="https://github.com/Kevdawg1/student-performance-prediction">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-NEICv1aGTvDRncdvM_fXoah5SNWx4pXAvg&s" alt="Logo" width="80" height="80">
+    <img src="https://upload.wikimedia.org/wikiversity/en/8/8c/FastAPI_logo.png" alt="Logo" width="80" height="80">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlGmKtrnxElpqw3AExKXPWWBulcwjlvDJa1Q&s" alt="Logo" width="80" height="80">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJl4fp0SkQbTPU5ZxVl6AKWYuKCwM0gIhNtQ&s" alt="Logo" width="80" height="80">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/1200px-Microsoft_Azure.svg.png" alt="Logo" width="80" height="80">
   </a>
