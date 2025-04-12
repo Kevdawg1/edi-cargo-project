@@ -18,7 +18,7 @@ jobs:
 
       - name: Install and Build
         run: |
-          cd frontend
+          cd edi-cargo-frontend
           npm install
           npm run build
 
