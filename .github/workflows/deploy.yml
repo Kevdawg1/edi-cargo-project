@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+      id-token: write
+      contents: read
+
 jobs:
   build-frontend:
     name: Build and Deploy React App to Azure Blob Storage
