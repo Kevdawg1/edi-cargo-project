@@ -24,17 +24,18 @@ jobs:
           npm install
           npm run build
 
-      - name: Upload to Azure Blob Storage
-        uses: azure/CLI@v1
-        with:
-          azcliversion: 2.53.0
-          inlineScript: |
-            az storage blob upload-batch \
-              --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
-              --account-key ${{ secrets.STORAGE_ACCOUNT_KEY }} \
-              --destination "\$web" \
-              --source "edi-cargo-frontend/build" \
-              --overwrite
+          - name: Azure Login (using service principal)
+          uses: azure/login@v1
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+  
+      - name: Upload to Azure Blob Storage (authenticated)
+        run: |
+          az storage blob upload-batch \
+            --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
+            --destination '$web' \
+            --source edi-cargo-frontend/build \
+            --overwrite
 
   deploy-backend:
     name: Build & Deploy FastAPI Backend to Azure Container Apps
