@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -21,11 +26,6 @@ jobs:
           cd edi-cargo-frontend
           npm install
           npm run build
-
-      - name: Log in to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Upload to Azure Blob Storage
         uses: azure/CLI@v1
@@ -39,6 +39,10 @@ jobs:
               --source edi-cargo-frontend/build \
               --overwrite
 
+      - name: logout
+        run: |
+              az logout
+        if: always()
 
   deploy-backend:
     name: Build and Deploy FastAPI Docker to ACA
