@@ -22,6 +22,11 @@ jobs:
           npm install
           npm run build
 
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Upload to Azure Blob Storage
         uses: azure/CLI@v1
         with:
