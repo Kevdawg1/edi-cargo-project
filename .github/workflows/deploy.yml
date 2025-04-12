@@ -30,8 +30,8 @@ jobs:
           azcliversion: 2.53.0
           inlineScript: |
             az storage blob upload-batch \
-              --account-name "${{ secrets.STORAGE_ACCOUNT_NAME }}" \
-              --account-key "${{ secrets.STORAGE_ACCOUNT_KEY }}" \
+              --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} \
+              --account-key ${{ secrets.STORAGE_ACCOUNT_KEY }} \
               --destination "\$web" \
               --source "edi-cargo-frontend/build" \
               --overwrite

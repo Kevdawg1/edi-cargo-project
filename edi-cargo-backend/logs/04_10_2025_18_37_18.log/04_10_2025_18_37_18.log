@@ -1,0 +1,2 @@
+[ 2025-04-12 17:48:49,619 ] 45 root - INFO - Received cargo items: [CargoItem(cargo_type='FCL', number_of_packages=1, container_number='', master_bill_of_lading_number=None, house_bill_of_lading_number=None)]
+[ 2025-04-12 17:48:49,619 ] 74 root - INFO - Generated EDI segments: ["LIN+1+I'\nPAC+++FCL:67:95'\nPAC+1+1'\nPCI+1'"]
