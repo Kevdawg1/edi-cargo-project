@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDI Cargo Report Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .column {
+            flex: 1;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .cargo-item {
+            border: 1px solid #eee;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        textarea {
+            width: 100%;
+            height: 300px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .remove-btn {
+            background-color: #f44336;
+            margin-top: 10px;
+        }
+        .remove-btn:hover {
+            background-color: #d32f2f;
+        }
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>EDI Cargo Report Generator</h1>
+    
+    <div class="container">
+        <div class="column">
+            <h2>Cargo Items</h2>
+            <div id="cargo-items-container">
+                <!-- Cargo items will be added here dynamically -->
+            </div>
+            
+            <button id="add-cargo-item">Add Cargo Item</button>
+            <button id="generate-edi">Generate EDI</button>
+        </div>
+        
+        <div class="column">
+            <h2>EDI Output</h2>
+            <textarea id="edi-output" readonly placeholder="EDI message will appear here after you generate it."></textarea>
+            
+            <h2>Parse Existing EDI</h2>
+            <textarea id="edi-input" placeholder="Paste existing EDI here to parse it into the form above"></textarea>
+            <button id="parse-edi">Parse EDI</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cargoItemsContainer = document.getElementById('cargo-items-container');
+            const addCargoItemBtn = document.getElementById('add-cargo-item');
+            const generateEdiBtn = document.getElementById('generate-edi');
+            const parseEdiBtn = document.getElementById('parse-edi');
+            const ediOutput = document.getElementById('edi-output');
+            const ediInput = document.getElementById('edi-input');
+            
+            // Add first cargo item by default
+            addCargoItem();
+            
+            // Add cargo item
+            addCargoItemBtn.addEventListener('click', addCargoItem);
+            
+            // Generate EDI
+            generateEdiBtn.addEventListener('click', generateEdi);
+            
+            // Parse EDI
+            parseEdiBtn.addEventListener('click', parseEdi);
+            
+            function addCargoItem() {
+                const cargoItemDiv = document.createElement('div');
+                cargoItemDiv.className = 'cargo-item';
+                cargoItemDiv.innerHTML = `
+                    <h3>Cargo Item #${cargoItemsContainer.children.length + 1}</h3>
+                    <label for="cargo-type-${cargoItemsContainer.children.length}">Cargo Type</label>
+                    <select id="cargo-type-${cargoItemsContainer.children.length}">
+                        <option value="FCL">FCL</option>
+                        <option value="LCL">LCL</option>
+                        <option value="FCX">FCX</option>
+                    </select>
+                    
+                    <label for="num-packages-${cargoItemsContainer.children.length}">Number of Packages</label>
+                    <input type="number" id="num-packages-${cargoItemsContainer.children.length}" min="1" value="1">
+                    
+                    <label for="container-num-${cargoItemsContainer.children.length}">Container Number (Optional)</label>
+                    <input type="text" id="container-num-${cargoItemsContainer.children.length}" placeholder="Enter container number">
+                    
+                    <label for="master-bill-${cargoItemsContainer.children.length}">Master Bill of Lading Number (Optional)</label>
+                    <input type="text" id="master-bill-${cargoItemsContainer.children.length}" placeholder="Enter master bill number">
+                    
+                    <label for="house-bill-${cargoItemsContainer.children.length}">House Bill of Lading Number (Optional)</label>
+                    <input type="text" id="house-bill-${cargoItemsContainer.children.length}" placeholder="Enter house bill number">
+                    
+                    <button class="remove-btn" onclick="this.parentNode.remove(); updateItemNumbers();">Remove Item</button>
+                `;
+                cargoItemsContainer.appendChild(cargoItemDiv);
+            }
+            
+            function updateItemNumbers() {
+                const items = cargoItemsContainer.querySelectorAll('.cargo-item');
+                items.forEach((item, index) => {
+                    item.querySelector('h3').textContent = `Cargo Item #${index + 1}`;
+                });
+            }
+            
+            async function generateEdi() {
+                const cargoItems = [];
+                const items = cargoItemsContainer.querySelectorAll('.cargo-item');
+                
+                items.forEach(item => {
+                    const index = Array.from(items).indexOf(item);
+                    const cargoType = document.getElementById(`cargo-type-${index}`).value;
+                    const numPackages = parseInt(document.getElementById(`num-packages-${index}`).value);
+                    const containerNum = document.getElementById(`container-num-${index}`).value.trim() || null;
+                    const masterBill = document.getElementById(`master-bill-${index}`).value.trim() || null;
+                    const houseBill = document.getElementById(`house-bill-${index}`).value.trim() || null;
+                    
+                    cargoItems.push({
+                        cargo_type: cargoType,
+                        number_of_packages: numPackages,
+                        container_number: containerNum,
+                        master_bill_of_lading_number: masterBill,
+                        house_bill_of_lading_number: houseBill
+                    });
+                });
+                
+                try {
+                    const response = await fetch('http://localhost:8000/generate-edi', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ cargo_items: cargoItems }),
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    ediOutput.value = data.edi_message;
+                } catch (error) {
+                    alert(`Failed to generate EDI: ${error.message}`);
+                    console.error('Error:', error);
+                }
+            }
+            
+            async function parseEdi() {
+                const ediContent = ediInput.value.trim();
+                if (!ediContent) {
+                    alert('Please paste EDI content to parse');
+                    return;
+                }
+                
+                try {
+                    const response = await fetch('http://localhost:8000/parse-edi', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ edi_content: ediContent }),
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    // Clear existing cargo items
+                    cargoItemsContainer.innerHTML = '';
+                    
+                    // Add parsed cargo items
+                    data.cargo_items.forEach((item, index) => {
+                        const cargoItemDiv = document.createElement('div');
+                        cargoItemDiv.className = 'cargo-item';
+                        cargoItemDiv.innerHTML = `
+                            <h3>Cargo Item #${index + 1}</h3>
+                            <label for="cargo-type-${index}">Cargo Type</label>
+                            <select id="cargo-type-${index}">
+                                <option value="FCL" ${item.cargo_type === 'FCL' ? 'selected' : ''}>FCL</option>
+                                <option value="LCL" ${item.cargo_type === 'LCL' ? 'selected' : ''}>LCL</option>
+                                <option value="FCX" ${item.cargo_type === 'FCX' ? 'selected' : ''}>FCX</option>
+                            </select>
+                            
+                            <label for="num-packages-${index}">Number of Packages</label>
+                            <input type="number" id="num-packages-${index}" min="1" value="${item.number_of_packages}">
+                            
+                            <label for="container-num-${index}">Container Number (Optional)</label>
+                            <input type="text" id="container-num-${index}" placeholder="Enter container number" value="${item.container_number || ''}">
+                            
+                            <label for="master-bill-${index}">Master Bill of Lading Number (Optional)</label>
+                            <input type="text" id="master-bill-${index}" placeholder="Enter master bill number" value="${item.master_bill_of_lading_number || ''}">
+                            
+                            <label for="house-bill-${index}">House Bill of Lading Number (Optional)</label>
+                            <input type="text" id="house-bill-${index}" placeholder="Enter house bill number" value="${item.house_bill_of_lading_number || ''}">
+                            
+                            <button class="remove-btn" onclick="this.parentNode.remove(); updateItemNumbers();">Remove Item</button>
+                        `;
+                        cargoItemsContainer.appendChild(cargoItemDiv);
+                    });
+                    
+                    // Also show the parsed data in the output for verification
+                    ediOutput.value = JSON.stringify(data.cargo_items, null, 2);
+                } catch (error) {
+                    alert(`Failed to parse EDI: ${error.message}`);
+                    console.error('Error:', error);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
