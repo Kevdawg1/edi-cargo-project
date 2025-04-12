@@ -9,7 +9,7 @@ COPY edi-cargo-backend/requirements.txt .
 RUN pip install -r requirements.txt
 
 # Copy the rest of the code
-COPY edi-cargo-backend .
+COPY edi-cargo-backend/ .
 
 # Expose port
 EXPOSE 8000
