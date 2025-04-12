@@ -15,6 +15,7 @@ export default function EDICargoGenerator() {
   const [cargoItems, setCargoItems] = useState([defaultCargoItem()]);
   const [ediOutput, setEdiOutput] = useState('');
   const [ediInput, setEdiInput] = useState('');
+  // const [parsedItems, setParsedItems] = useState([]);
 
   const handleItemChange = (index, field, value) => {
     const updated = [...cargoItems];
@@ -42,7 +43,7 @@ export default function EDICargoGenerator() {
       console.log(ediInput);
       const response = await axios.post(BACKEND_URL+'/parse-edi', { edi_content: ediInput });
       console.log(response.data);
-      setParsedItems(response.data.cargo_items);
+      // setParsedItems(response.data.cargo_items);
       setCargoItems(response.data.cargo_items);
     } catch (error) {
       alert('Error parsing EDI');
