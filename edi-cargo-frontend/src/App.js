@@ -75,6 +75,7 @@ export default function EDICargoGenerator() {
                   >
                     <option value="FCL">FCL</option>
                     <option value="LCL">LCL</option>
+                    <option value="LCL">FCX</option>
                   </select>
                 </div>
 
