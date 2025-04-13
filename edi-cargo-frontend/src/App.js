@@ -131,16 +131,17 @@ export default function EDICargoGenerator() {
                 </div>
               </div>
             ))}
-            <div className="d-grid gap-2">
-              <button onClick={addCargoItem} className="btn btn-outline-light">Add Cargo Item</button>
-              <button onClick={generateEDI} className="btn btn-light">
-                Generate EDI
-              </button>
+            <div className="card-body">
+              <div className="d-grid gap-2">
+                <button onClick={addCargoItem} className="btn btn-outline-light">Add Cargo Item</button>
+                <button onClick={generateEDI} className="btn btn-outline-light mb-2">
+                  Generate EDI
+                </button>
+              </div>
             </div>
-
           </div>
 
-          <div className="card bg-secondary text-white">
+          <div className="card custom-background text-white">
             <div className="card-body">
               <h5 className="card-title">Parse Existing EDI</h5>
               <textarea
@@ -161,7 +162,7 @@ export default function EDICargoGenerator() {
 
         {/* EDI Output */}
         <div className="col-lg-6">
-          <div className="card bg-secondary text-white h-100">
+          <div className="card custom-background text-white h-100">
             <div className="card-body">
               <h5 className="card-title">EDI Output</h5>
               <textarea

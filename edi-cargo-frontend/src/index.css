@@ -116,6 +116,7 @@ a:hover {
   font-size: 1.1em;
   font-weight: 300;
   color: #85FFC7;
+  width: 100% !important;
 }
 #survey-form input:focus {
   border-color: #85FFC7;
