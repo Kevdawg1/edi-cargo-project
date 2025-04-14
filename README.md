@@ -26,7 +26,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/Kevdawg1/student-performance-prediction">
+  <a href="https://github.com/Kevdawg1/edi-cargo-project">
     <img src="https://upload.wikimedia.org/wikiversity/en/8/8c/FastAPI_logo.png" alt="Logo" width="80" height="80">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlGmKtrnxElpqw3AExKXPWWBulcwjlvDJa1Q&s" alt="Logo" width="80" height="80">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJl4fp0SkQbTPU5ZxVl6AKWYuKCwM0gIhNtQ&s" alt="Logo" width="80" height="80">
@@ -38,14 +38,14 @@
   <p align="center">
     A standard format for exchanging business documents electronically.
     <br />
-    <a href="https://github.com/Kevdawg1/student-performance-prediction"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Kevdawg1/edi-cargo-project"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/Kevdawg1/student-performance-prediction">View Demo</a>
+    <a href="https://github.com/Kevdawg1/edi-cargo-project">View Demo</a>
     &middot;
-    <a href="https://github.com/Kevdawg1/student-performance-prediction/issues/new?template=bug_report.md">Report Bug</a>
+    <a href="https://github.com/Kevdawg1/edi-cargo-project/issues/new?template=bug_report.md">Report Bug</a>
     &middot;
-    <a href="https://github.com/Kevdawg1/student-performance-prediction/issues/new?template=feature_request.md">Request Feature</a>
+    <a href="https://github.com/Kevdawg1/edi-cargo-project/issues/new?template=feature_request.md">Request Feature</a>
   </p>
 </div>
 
@@ -123,7 +123,7 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/Kevdawg1/student-performance-prediction.git
+   git clone https://github.com/Kevdawg1/edi-cargo-project.git
    ```
 2. Move into the backend directory
    ```sh
@@ -159,7 +159,7 @@ Azure Container Registry will be used to containerize the Docker Image of the pr
 
 1. Log in or sign up for a Microsoft Azure account.
 2. Create an Azure Container Registry with the following details:
-    * Registry Name: ensure that the registry name matches the domain of the Docker Image i.e. testdockerkevin
+    * Registry Name: ensure that the registry name matches the domain of the Docker Image i.e. clearaitakehomeproject
     * Location: select the closest region to your physical location
     * SKU: Standard
 3. Once created, navigate to Settings > Access Keys > Admin User: Enabled.
@@ -169,13 +169,13 @@ Azure Container Registry will be used to containerize the Docker Image of the pr
 
 Run the following commands from your terminal at the project root directory: 
 
-** Replace `testdockerkevin` with your Azure Container Registry name.
+** Replace `clearaitakehomeproject` with your Azure Container Registry name.
 
 ```
-docker build -t testdockerkevin.azurecr.io/mltest:latest .
+docker build -t clearaitakehomeproject.azurecr.io/mltest:latest .
 ```
 ```
-docker login testdockerkevin.azurecr.io
+docker login clearaitakehomeproject.azurecr.io
 ```
 
 Username: Your Azure Container Registry name
@@ -183,30 +183,47 @@ Username: Your Azure Container Registry name
 Password: Use the password you copied from the previous step. 
 
 ```
-docker push testdockerkevin.azurecr.io/mltest:latest
+docker push clearaitakehomeproject.azurecr.io/mltest:latest
 ```
 
-### Create Azure Web App
+### Create Azure Container App
 
-1. In Azure App Services, create a web application. 
+1. In Azure Container Apps, create a container application. 
 2. Ensure that the Resource Group is shared with the Container Registry created previously. 
-3. Publish: select `Docker Container`
+3. Enter the name of your container app and save it as a Github Action Secret under the secret name `AZURE_CONTAINER_APP_NAME`
 4. Region: select the closest region to your physical location
-5. Pricing Plan: select a Free Tier plan if available
-6. Under `Docker` settings, configure the following settings: 
-    * Options: `Single Container`
+5. Deployment Source: Container image
+6. Under `Container` settings, configure the following settings: 
     * Image Source: `Azure Container Registry`
     * Registry: select your container registry
     * Image: select the Docker image that was pushed previously
-    * Tag: `latest`
-7. Create the Web App.
-8. Navigate to `Deployment Center`, enable Continuous Deployment.
-9. Change the `Source` to `GitHub Actions: Build, deploy and manage your container app automatically with GitHub Actions`.
-10. Under the GitHub Actions section, configure the following settings: 
-    * Organization: select the relevant GitHub organization your project repository is under.
-    * Repository: select your project repository.
-    * Branch: main
-11. Save your changes. 
+    * Image Tag: `latest`
+7. Create the Container App.
+
+### Create Azure Static Website
+
+1. In Azure Storage Accounts, create a storage account.
+2. Enter the name of your storage account and save it as a Github Action Secret under the secret name `STORAGE_ACCOUNT_NAME`.
+    * Region: select the closest region to your physical location
+    * Primary Serivce: `Azure Blob Storage or Azure Data Lake Storage Gen 2`
+    * Performance: `Standard`
+3. Create the storage account instance. 
+4. When created, navigate to `Data Management` > `Static Website`.
+5. Enable the static website
+    * Index document name `index.html`
+    * Error document path: `index.html`
+
+### Github Action Secrets Setup
+
+| Secret Name  | Value |
+| ------------- | ------------- |
+| `AZURE_CREDENTIALS`  | JSON from CLI Command: `az ad sp create-for-rbac --sdk-auth`  |
+| `STORAGE_ACCOUNT_NAME` | Name of your storage account created |
+| `ACR_LOGIN_SERVER` | Find this in ACR > Settings > Access Keys e.g. `clearaitakehomeproject.azurecr.io` |
+| `ACR_USERNAME` | Find this in ACR > Settings > Access Keys e.g. `clearaitakehomeproject` |
+| `ACR_PASSWORD` | Find this in ACR > Settings > Access Keys |
+| `AZURE_CONTAINER_APPS_NAME`  | Name of your container app created  |
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -215,18 +232,18 @@ docker push testdockerkevin.azurecr.io/mltest:latest
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-### Python Application
+### Python Backend pplication
 
 To start the app locally, simply use the command below. If any changes are made, you will need to stop the program from running and restart it to see the changes applied. 
 
 ```sh
-  python app.py
+  cd edi-cargo-backend | python main.py
 ```
 
-### React Application
+### React Frontend Application
 
 ```sh
-  npm start
+  cd edi-cargo-frontend | npm start
 ```
 
 

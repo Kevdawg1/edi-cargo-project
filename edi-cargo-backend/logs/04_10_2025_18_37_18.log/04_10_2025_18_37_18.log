@@ -139,3 +139,62 @@ RFF+BH:HBL20230003B'
 [ 2025-04-13 17:33:25,651 ] 105 root - INFO - Parsed cargo items: [{'cargo_type': 'FCL', 'number_of_packages': 2, 'container_number': 'CON123456', 'master_bill_of_lading_number': 'MBL20230001', 'house_bill_of_lading_number': 'HBL20230001A'}, {'cargo_type': 'LCL', 'number_of_packages': 5, 'container_number': None, 'master_bill_of_lading_number': 'MBL20230002', 'house_bill_of_lading_number': None}, {'cargo_type': 'FCX', 'number_of_packages': 1, 'container_number': 'CON789012', 'master_bill_of_lading_number': None, 'house_bill_of_lading_number': 'HBL20230003B'}]
 [ 2025-04-13 17:34:53,385 ] 45 root - INFO - Received cargo items: [CargoItem(cargo_type='FCL', number_of_packages=1, container_number='CON123456', master_bill_of_lading_number='MBL20230001', house_bill_of_lading_number='HBL20230001A'), CargoItem(cargo_type='LCL', number_of_packages=5, container_number=None, master_bill_of_lading_number='MBL20230002', house_bill_of_lading_number=None), CargoItem(cargo_type='FCX', number_of_packages=1, container_number='CON789012', master_bill_of_lading_number=None, house_bill_of_lading_number='HBL20230003B')]
 [ 2025-04-13 17:34:53,386 ] 74 root - INFO - Generated EDI segments: ["LIN+1+I'\nPAC+++FCL:67:95'\nPAC+1+1'\nPCI+1'\nRFF+AAQ:CON123456'\nPCI+1'\nRFF+MB:MBL20230001'\nPCI+1'\nRFF+BH:HBL20230001A'", "LIN+2+I'\nPAC+++LCL:67:95'\nPAC+5+1'\nPCI+1'\nRFF+MB:MBL20230002'\nPCI+1'", "LIN+3+I'\nPAC+++FCX:67:95'\nPAC+1+1'\nPCI+1'\nRFF+AAQ:CON789012'\nPCI+1'\nRFF+BH:HBL20230003B'"]
+[ 2025-04-13 17:49:28,972 ] 94 root - INFO - Received EDI content: LIN+1+I'
+PAC+++FCL:67:95'
+PAC+2+1'
+PCI+1'
+RFF+AAQ:CON123456'
+PCI+1'
+RFF+MB:MBL20230001'
+PCI+1'
+RFF+BH:HBL20230001A'
+LIN+2+I'
+PAC+++LCL:67:95'
+PAC+5+1'
+PCI+1'
+RFF+MB:MBL20230002'
+PCI+1'
+LIN+3+I'
+PAC+++FCX:67:95'
+PAC+1+1'
+PCI+1'
+RFF+AAQ:CON789012'
+PCI+1'
+RFF+BH:HBL20230003B'
+[ 2025-04-13 17:49:28,973 ] 61 root - INFO - Parsing EDI segment: ["LIN+1+I'", "PAC+++FCL:67:95'", "PAC+2+1'", "PCI+1'", "RFF+AAQ:CON123456'", "PCI+1'", "RFF+MB:MBL20230001'", "PCI+1'", "RFF+BH:HBL20230001A'"]
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: LIN+1+I'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: PAC+++FCL:67:95'
+[ 2025-04-13 17:49:28,973 ] 69 root - INFO - Found cargo type: FCL
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: PAC+2+1'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: PCI+1'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: RFF+AAQ:CON123456'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: PCI+1'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: RFF+MB:MBL20230001'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: PCI+1'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: RFF+BH:HBL20230001A'
+[ 2025-04-13 17:49:28,973 ] 61 root - INFO - Parsing EDI segment: ["LIN+2+I'", "PAC+++LCL:67:95'", "PAC+5+1'", "PCI+1'", "RFF+MB:MBL20230002'", "PCI+1'"]
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: LIN+2+I'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: PAC+++LCL:67:95'
+[ 2025-04-13 17:49:28,973 ] 69 root - INFO - Found cargo type: LCL
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: PAC+5+1'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: PCI+1'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: RFF+MB:MBL20230002'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: PCI+1'
+[ 2025-04-13 17:49:28,973 ] 61 root - INFO - Parsing EDI segment: ["LIN+3+I'", "PAC+++FCX:67:95'", "PAC+1+1'", "PCI+1'", "RFF+AAQ:CON789012'", "PCI+1'", "RFF+BH:HBL20230003B'"]
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: LIN+3+I'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: PAC+++FCX:67:95'
+[ 2025-04-13 17:49:28,973 ] 69 root - INFO - Found cargo type: FCX
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: PAC+1+1'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: PCI+1'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: RFF+AAQ:CON789012'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: PCI+1'
+[ 2025-04-13 17:49:28,973 ] 64 root - INFO - Processing line: RFF+BH:HBL20230003B'
+[ 2025-04-13 17:49:28,973 ] 105 root - INFO - Parsed cargo items: [{'cargo_type': 'FCL', 'number_of_packages': 2, 'container_number': 'CON123456', 'master_bill_of_lading_number': 'MBL20230001', 'house_bill_of_lading_number': 'HBL20230001A'}, {'cargo_type': 'LCL', 'number_of_packages': 5, 'container_number': None, 'master_bill_of_lading_number': 'MBL20230002', 'house_bill_of_lading_number': None}, {'cargo_type': 'FCX', 'number_of_packages': 1, 'container_number': 'CON789012', 'master_bill_of_lading_number': None, 'house_bill_of_lading_number': 'HBL20230003B'}]
+[ 2025-04-13 17:49:30,894 ] 45 root - INFO - Received cargo items: [CargoItem(cargo_type='FCL', number_of_packages=2, container_number='CON123456', master_bill_of_lading_number='MBL20230001', house_bill_of_lading_number='HBL20230001A'), CargoItem(cargo_type='LCL', number_of_packages=5, container_number=None, master_bill_of_lading_number='MBL20230002', house_bill_of_lading_number=None), CargoItem(cargo_type='FCX', number_of_packages=1, container_number='CON789012', master_bill_of_lading_number=None, house_bill_of_lading_number='HBL20230003B')]
+[ 2025-04-13 17:49:30,894 ] 74 root - INFO - Generated EDI segments: ["LIN+1+I'\nPAC+++FCL:67:95'\nPAC+2+1'\nPCI+1'\nRFF+AAQ:CON123456'\nPCI+1'\nRFF+MB:MBL20230001'\nPCI+1'\nRFF+BH:HBL20230001A'", "LIN+2+I'\nPAC+++LCL:67:95'\nPAC+5+1'\nPCI+1'\nRFF+MB:MBL20230002'\nPCI+1'", "LIN+3+I'\nPAC+++FCX:67:95'\nPAC+1+1'\nPCI+1'\nRFF+AAQ:CON789012'\nPCI+1'\nRFF+BH:HBL20230003B'"]
+[ 2025-04-13 17:49:32,124 ] 45 root - INFO - Received cargo items: [CargoItem(cargo_type='FCL', number_of_packages=2, container_number='CON123456', master_bill_of_lading_number='MBL20230001', house_bill_of_lading_number='HBL20230001A'), CargoItem(cargo_type='LCL', number_of_packages=5, container_number=None, master_bill_of_lading_number='MBL20230002', house_bill_of_lading_number=None), CargoItem(cargo_type='FCX', number_of_packages=1, container_number='CON789012', master_bill_of_lading_number=None, house_bill_of_lading_number='HBL20230003B')]
+[ 2025-04-13 17:49:32,124 ] 74 root - INFO - Generated EDI segments: ["LIN+1+I'\nPAC+++FCL:67:95'\nPAC+2+1'\nPCI+1'\nRFF+AAQ:CON123456'\nPCI+1'\nRFF+MB:MBL20230001'\nPCI+1'\nRFF+BH:HBL20230001A'", "LIN+2+I'\nPAC+++LCL:67:95'\nPAC+5+1'\nPCI+1'\nRFF+MB:MBL20230002'\nPCI+1'", "LIN+3+I'\nPAC+++FCX:67:95'\nPAC+1+1'\nPCI+1'\nRFF+AAQ:CON789012'\nPCI+1'\nRFF+BH:HBL20230003B'"]
+[ 2025-04-14 12:39:24,397 ] 45 root - INFO - Received cargo items: [CargoItem(cargo_type='FCL', number_of_packages=1, container_number='', master_bill_of_lading_number=None, house_bill_of_lading_number=None)]
+[ 2025-04-14 12:39:24,398 ] 74 root - INFO - Generated EDI segments: ["LIN+1+I'\nPAC+++FCL:67:95'\nPAC+1+1'\nPCI+1'"]
+[ 2025-04-14 12:39:30,378 ] 45 root - INFO - Received cargo items: [CargoItem(cargo_type='FCL', number_of_packages=1, container_number='', master_bill_of_lading_number=None, house_bill_of_lading_number=None)]
+[ 2025-04-14 12:39:30,379 ] 74 root - INFO - Generated EDI segments: ["LIN+1+I'\nPAC+++FCL:67:95'\nPAC+1+1'\nPCI+1'"]
