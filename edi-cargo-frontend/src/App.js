@@ -32,6 +32,7 @@ export default function EDICargoGenerator() {
   const generateEDI = async () => {
     try {
       console.log(cargoItems);
+      console.log(BACKEND_URL + "/generate-edi");
       const response = await axios.post(BACKEND_URL + '/generate-edi', { cargo_items: cargoItems });
       console.log(response.data);
       setEdiOutput(response.data.edi_message);
