@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import List, Optional
 import re
@@ -16,7 +17,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:3000",  # Local dev
-    "https://edifrontend.z26.web.core.windows.net/",  # Azure Blob Static Website (prod)
+    "https://edifrontend.z26.web.core.windows.net",  # Azure Blob Static Website (prod)
 ]
 
 # Enable CORS
@@ -27,6 +28,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.options("/{rest_of_path:path}")
+async def preflight_handler():
+    return JSONResponse(content={"message": "CORS preflight successful"})
 
 # Helper functions
 
