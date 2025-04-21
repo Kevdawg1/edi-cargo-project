@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const BACKEND_URL = 'http://localhost:8000';
+// const BACKEND_URL = 'http://localhost:8000';
+const BACKEND_URL = 'https://clearai-backend-container-app.internal.lemonflower-9055be44.australiasoutheast.azurecontainerapps.io';
 
 const defaultCargoItem = () => ({
   cargo_type: 'FCL',
