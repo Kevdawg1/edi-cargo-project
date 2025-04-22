@@ -13,47 +13,20 @@ from src.utils.utils import generate_edi_segment, parse_edi_segment
 from src.testing.unit_test import TestGenerateEdiSegment
 import unittest
 
-# app = FastAPI()
-
-# origins = [
-#     "http://localhost:3000",  # Local dev
-#     "https://edifrontend.z26.web.core.windows.net",  # Azure Blob Static Website (prod)
-# ]
-
-# # Enable CORS
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=origins,
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
-
-from fastapi import FastAPI, Request
-from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.responses import Response
-
-class CustomCORSMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: Request, call_next):
-        response = Response("Internal server error", status_code=500)
-        if request.method == "OPTIONS":
-            response = Response(status_code=204)
-        else:
-            response = await call_next(request)
-
-        origin = request.headers.get("origin")
-        if origin in [
-            "http://localhost:3000",
-            "https://edifrontend.z26.web.core.windows.net"
-        ]:
-            response.headers["Access-Control-Allow-Origin"] = origin
-            response.headers["Access-Control-Allow-Credentials"] = "true"
-            response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
-            response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type"
-        return response
-
 app = FastAPI()
-app.add_middleware(CustomCORSMiddleware)
+
+origins = [
+    "https://edifrontend.z26.web.core.windows.net",  # Azure Blob Static Website (prod)
+]
+
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.options("/{rest_of_path:path}")
 async def preflight_handler():
